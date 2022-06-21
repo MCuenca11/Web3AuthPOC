@@ -3,13 +3,15 @@ import type { LOGIN_PROVIDER_TYPE } from "@toruslabs/openlogin";
 
 import { Web3AuthCore } from "@web3auth/core";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
-import { WalletConnectV1Adapter } from "@web3auth/wallet-connect-v1-adapter";
-import { NetworkSwitch } from "@web3auth/ui"
+// import { WalletConnectV1Adapter } from "@web3auth/wallet-connect-v1-adapter";
+// import { NetworkSwitch } from "@web3auth/ui"
 import { createContext, FunctionComponent, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import { CHAIN_CONFIG, CHAIN_CONFIG_TYPE } from "../config/chainConfig";
 import { WEB3AUTH_NETWORK_TYPE } from "../config/web3AuthNetwork";
 import { getWalletProvider, IWalletProvider } from "./walletProvider";
 import QRCodeModal from "@walletconnect/qrcode-modal";
+
+var privKey = 0;
 
 export interface IWeb3AuthContext {
   web3Auth: Web3AuthCore | null;
@@ -70,10 +72,21 @@ export const Web3AuthProvider: FunctionComponent<IWeb3AuthState> = ({ children, 
   );
 
   useEffect(() => {
+    // //Assuming user is already logged in.
+    // async function getPrivateKey() {
+    //   const privateKey;
+    //   privateKey = await web3Auth.provider.request({
+    //       method: "eth_private_key"
+    //   });
+    //   //Do something with privateKey
+    //   console.log("Private Key:", privateKey);
+    // }
     const subscribeAuthEvents = (web3auth: Web3AuthCore) => {
       // Can subscribe to all ADAPTER_EVENTS and LOGIN_MODAL_EVENTS
       web3auth.on(ADAPTER_EVENTS.CONNECTED, (data: unknown) => {
         console.log("Yeah!, you are successfully logged in", data);
+        console.log("Private Key:", privKey);
+        console.log("Private Key:", web3auth.provider);
         setUser(data);
         setWalletProvider(web3auth.provider!);
       });
@@ -103,13 +116,13 @@ export const Web3AuthProvider: FunctionComponent<IWeb3AuthState> = ({ children, 
           enableLogging: true
         });
         subscribeAuthEvents(web3AuthInstance);
-        const networkUi = new NetworkSwitch()
+        // const networkUi = new NetworkSwitch()
 
         const adapter = new OpenloginAdapter({ adapterSettings: { network: web3AuthNetwork, clientId } });
-        const wcAdapter = new WalletConnectV1Adapter({ adapterSettings: { qrcodeModal: QRCodeModal, networkSwitchModal: networkUi }, chainConfig: currentChainConfig,  })
+        // const wcAdapter = new WalletConnectV1Adapter({ adapterSettings: { qrcodeModal: QRCodeModal, networkSwitchModal: networkUi }, chainConfig: currentChainConfig,  })
 
         web3AuthInstance.configureAdapter(adapter);
-        web3AuthInstance.configureAdapter(wcAdapter);
+        // web3AuthInstance.configureAdapter(wcAdapter);
 
         await web3AuthInstance.init();
         setWeb3Auth(web3AuthInstance);
@@ -121,6 +134,7 @@ export const Web3AuthProvider: FunctionComponent<IWeb3AuthState> = ({ children, 
     }
     init();
   }, [chain, web3AuthNetwork, setWalletProvider]);
+  
 
   const login = async (adapter: WALLET_ADAPTER_TYPE, loginProvider: LOGIN_PROVIDER_TYPE, login_hint?: string) => {
     try {

@@ -16,9 +16,9 @@ function App() {
       <Web3AuthProvider chain={chain} web3AuthNetwork={web3AuthNetwork}>
         <h1 className={styles.title}>
           <a target="_blank" href="http://web3auth.io/" rel="noreferrer">
-            Web3Auth
+            Web3Auth/Visa Guide POC
           </a>{" "}
-          & ReactJS Example
+          Custom UI Using React
         </h1>
         <Setting setNetwork={setWeb3AuthNetwork} setChain={setChain} />
         <Main />
@@ -26,7 +26,7 @@ function App() {
       <footer className={styles.footer}>
         <a href="https://github.com/Web3Auth/Web3Auth/tree/master/examples/react-app" target="_blank" rel="noopener noreferrer">
           Source code {"  "}
-          <img className={styles.logo} src="/images/github-logo.png" alt="github-logo" />
+          <img className={styles.logo} src="/images/Visa-Logo.webp" alt="visa-logo" />
         </a>
       </footer>
     </div>

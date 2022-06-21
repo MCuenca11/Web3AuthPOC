@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ethereum Web3Auth Getting Started</title>
+    <title>Visa Wallet POC</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
     <div class="container">
-      <h1 class="title"><a target="_blank" href="http://web3auth.io/">Web3Auth</a> ETH & JS Integration Example</h1>
+      <h1 class="title"><a target="_blank" href="http://web3auth.io/">Visa Crypto Wallet POC</a> Integrating Web3Auth and Visa Guide</h1>
       <!-- Logged In -->
       <div class="grid btn-logged-in">
+        <!--- With getuserinfo you will get name, email and profile image of user whereas if user is using some wallet like
+         metamask to login then you will get only ethereum address of user-->
         <button id="get-user-info" class="btn">Get User Info</button>
         <button id="get-accounts" class="btn">Get Accounts</button>
         <button id="get-balance" class="btn">Get Balance</button>
@@ -27,12 +29,12 @@
 
       <!-- Logged Logout -->
       <div class="grid btn-logged-out">
-        <button id="login" class="btn">Login</button>
+        <button id="login" class="btn">Login using Web3Auth/Visa Guide</button>
       </div>
       <footer class="footer">
         <a href="https://github.com/Web3Auth/Web3Auth/tree/master/examples/getting-started" target="_blank" rel="noopener noreferrer">
-          Source code
-          <img class="logo" src="/github-logo.png" />
+          Click here to access our source code
+          <img class="logo" src="/Visa-Logo.webp" />
         </a>
       </footer>
     </div>
@@ -50,7 +52,7 @@
 
         web3AuthInstance = new web3authSdk.Web3Auth({
           chainConfig: { chainNamespace: "eip155" },
-          clientId: "YOUR_CLIENT_ID_HERE", // get your clientId from https://developer.web3auth.io
+          clientId: "BC9mE4fQQ2Wmpjq0qioiZy3KQiqdhjisaBXLQ1XqxJsqKXqb1IJGhrGT50cE-6Ow1L9fHe6_m8c9tKjfnulh8jI", // get your clientId from https://developer.web3auth.io
         });
 
         subscribeAuthEvents(web3AuthInstance);
@@ -71,7 +73,7 @@
 
       function subscribeAuthEvents(web3auth) {
         web3auth.on("connected", (data) => {
-          console.log("Yeah!, you are successfully logged in", data);
+          console.log("Login was successful!", data);
         });
 
         web3auth.on("connecting", () => {
@@ -83,7 +85,7 @@
         });
 
         web3auth.on("errored", (error) => {
-          console.log("some error or user have cancelled login request", error);
+          console.log("some error or user cancelled the login request", error);
         });
 
         web3auth.on("MODAL_VISIBILITY", (isVisible) => {
@@ -111,6 +113,7 @@
           console.error(error.message);
         }
       });
+
 
       $("#get-user-info").click(async function (event) {
         try {
@@ -164,7 +167,7 @@
         } catch (error) {
           console.error(error.message);
         }
-      });
+     });
 
       $("#sign-tx").click(async function (event) {
         try {

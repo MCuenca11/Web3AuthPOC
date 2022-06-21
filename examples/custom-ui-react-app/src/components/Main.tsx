@@ -43,7 +43,10 @@ const Main = () => {
        <div>
           <img src="https://images.web3auth.io/web3auth.svg" />
         </div>
-      <h3>Login With</h3>
+      <h3>Login With an Option Below to Access Visa Wallet</h3>
+      <button onClick={()=>loginWithWalletConnect()} className={styles.card}>
+        Visa Guide
+      </button>
       <button onClick={()=>login(WALLET_ADAPTERS.OPENLOGIN,"google")} className={styles.card}>
         Google
       </button>
